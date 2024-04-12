@@ -1,0 +1,18 @@
+{
+  "name": "journey-people-api",
+  "version": "1.0.0",
+  "description": "An API when it comes to learning, you must keep practicing.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.4",
+    "sequelize": "^6.37.2"
+  }
+}

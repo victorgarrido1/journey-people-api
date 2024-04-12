@@ -1,10 +1,7 @@
-const { Sequelize, Op, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-// Code here! It works!
 const express = require('express');
 const routes = require('./routes');
-const sequelize = require('./config/connection');
+const { Sequelize } = require('sequelize');
+const sequelize = require('./config/connection'); // Assuming this file configures Sequelize
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,18 +9,28 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// turn on routes
+// Turn on routes
 app.use(routes);
 
+// Optionally configure logging for Sequelize
+// const sequelize = new Sequelize('sqlite::memory:', {
+//   logging: console.log, // or false to disable logging
+// });
 
-try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+// Test database connection
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to the database has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
 
-// turn on connection to db and server
+// Sync database models
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+  app.listen(PORT, () => console.log('Now listening on port', PORT));
 });
+
+// If you have defined models, include them in the sync method
+// Example: sequelize.sync({ force: false, models: [YourModel1, YourModel2] }).then(...)

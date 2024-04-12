@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS journey_db;
+
+CREATE DATABASE journey_db;
