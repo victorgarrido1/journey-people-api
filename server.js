@@ -1,34 +1,32 @@
-const express = require('express');
-const routes = require('./routes');
-const { Sequelize } = require('sequelize');
+const express = require('express'); // Import the Express framework
+const routes = require('./routes'); // Import your routes
+const { Sequelize } = require('sequelize'); // Import Sequelize
 const sequelize = require('./config/connection'); // Assuming this file configures Sequelize
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const app = express(); // Create an instance of Express
+const PORT = process.env.PORT || 3001; // Set the port number
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
-// Turn on routes
+// Turn on routes by using the imported router object
 app.use(routes);
 
-// Optionally configure logging for Sequelize
-// const sequelize = new Sequelize('sqlite::memory:', {
-//   logging: console.log, // or false to disable logging
-// });
+
 
 // Test database connection
 (async () => {
   try {
-    await sequelize.authenticate();
+    await sequelize.authenticate(); // Authenticate with the database
     console.log('Connection to the database has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 })();
 
-// Sync database models
+// Sync database models with the database
 sequelize.sync({ force: false }).then(() => {
+  // Start the server once synchronization is complete
   app.listen(PORT, () => console.log('Now listening on port', PORT));
 });
 
