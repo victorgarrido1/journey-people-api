@@ -16,6 +16,7 @@ Location.init(
     location_budget: {
       type: DataTypes.DECIMAL(12, 4),
       allowNull: false,
+      defaultValue: 0, // Provide a default value
     },
     location_amount: {
       type: DataTypes.INTEGER,

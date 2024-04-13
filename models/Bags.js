@@ -13,8 +13,9 @@ Bags.init(
     },
     bag_count: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true, // Allow null values
     },
+    
     bag_cost: {
       type: DataTypes.INTEGER,
       allowNull: true // Allowing null values for bag_count
