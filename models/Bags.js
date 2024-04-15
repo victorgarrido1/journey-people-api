@@ -1,33 +1,48 @@
-const { Model, DataTypes } = require('sequelize'); // Import necessary modules
-const sequelize = require('../config/connection'); // Assuming this file correctly configures Sequelize
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-class Bags extends Model {} // Define the Bags model class
+class Bags extends Model {}
 
-// Define the fields/columns for the Bags model
 Bags.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true, // Assuming id is the primary key
-      autoIncrement: true // Assuming id auto-increments
+      primaryKey: true,
+      autoIncrement: true
     },
-    bag_count: {
-      type: DataTypes.INTEGER,
-      allowNull: true, // Allow null values
+    bag_budget: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true
     },
-    
-    bag_cost: {
+    person_amount: {
       type: DataTypes.INTEGER,
-      allowNull: true // Allowing null values for bag_count
+      allowNull: false,
+      defaultValue: 1
+    },
+    person_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'location', // Assuming the table name for person is 'Person' with uppercase P
+        key: 'id',
+        unique: true // Assuming each bag is associated with only one person
+      }
+    },
+    location_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'location', // Assuming the table name for location is 'Location' with uppercase L
+        key: 'id',
+        unique: false // Assuming multiple bags can be associated with the same location
+      }
     }
   },
   {
-    sequelize, // Pass the sequelize connection
-    timestamps: false, // Disable timestamps
-    freezeTableName: true, // Prevent Sequelize from pluralizing the table name
-    underscored: true, // Use underscores instead of camelCase for automatically added attributes
-    modelName: 'bags' // Set the model name
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'bags'
   }
 );
 
-module.exports = Bags; // Export the Bags model for use in other files
+module.exports = Bags;

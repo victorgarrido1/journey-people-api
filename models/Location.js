@@ -13,25 +13,11 @@ Location.init(
       primaryKey: true,
       autoIncrement: true, // Define id as the primary key with auto-increment
     },
-    location_budget: {
-      type: DataTypes.DECIMAL(12, 4),
-      allowNull: false,
-      defaultValue: 0, // Provide a default value
-    },
     location_amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1,
     },
-    people_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "people",
-        key: "id",
-        unique: false,
-      },
-    },
-
     // Define other fields/columns here as needed
   },
   {
@@ -39,7 +25,7 @@ Location.init(
     timestamps: false, // Disable timestamps
     freezeTableName: true, // Prevent Sequelize from pluralizing the table name
     underscored: true, // Use underscores instead of camelCase for automatically added attributes
-    modelName: "location", // Set the model name
+    modelName: "location", // Set the model name (use PascalCase)
   }
 );
 

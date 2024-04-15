@@ -23,16 +23,31 @@ router.get('/', async (req, res) => {
 
 //create a new person route
 router.post('/', async (req, res) => {
-    console.log(req.body);
-    try {
-        const PeopleData = await People.create(req.body);
-        res.status(200).json(PeopleData);
-    } catch (err) {
-        res.status(500).json(err);        
-    }
+  console.log(req.body);
+  try {
+    const PeopleData = await People.create(req.body);
+    res.status(200).json(PeopleData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-
+router.delete('/:id', async (req, res) => {
+  try {
+    const PeopleData = await People.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (!PeopleData) {
+      res.status(404).json('No person data found here');
+      return;
+    }
+    res.status(200).json(PeopleData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Error route
 router.get('/error', (req, res) => {
